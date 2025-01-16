@@ -20,20 +20,25 @@ const AddExpenseForm = ({ budgets }) => {
   }, [isSubmitting])
 
   return (
-    <div className="form-wrapper">
-      <h2 className="h3">Add New{" "}<span className="accent">
-        {budgets.length === 1 && `${budgets.map((budg) => budg.name)}`}
-      </span>{" "}
+    <div className="form-wrapper p-6 bg-white rounded-lg 
+    shadow-lg border-2 border-gray-200 mb-6">
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+        Add New{" "}
+        <span className="text-blue-500">
+          {budgets.length === 1 && `${budgets.map((budg) => budg.name)}`}
+        </span>{" "}
         Expense
       </h2>
       <fetcher.Form
         method="post"
-        className="grid-sm"
+        className="grid gap-4"
         ref={formRef}
       >
-        <div className="expense-inputs">
-          <div className="grid-xs">
-            <label htmlFor="newExpense">Expense Name</label>
+        <div className="expense-inputs grid gap-4">
+          <div className="grid gap-2">
+            <label htmlFor="newExpense" className="text-sm font-medium text-gray-700">
+              Expense Name
+            </label>
             <input
               type="text"
               name="newExpense"
@@ -41,10 +46,13 @@ const AddExpenseForm = ({ budgets }) => {
               placeholder="e.g., Coffee"
               ref={focusRef}
               required
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
-          <div className="grid-xs">
-            <label htmlFor="newExpenseAmount">Amount</label>
+          <div className="grid gap-2">
+            <label htmlFor="newExpenseAmount" className="text-sm font-medium text-gray-700">
+              Amount
+            </label>
             <input
               type="number"
               step="0.01"
@@ -53,38 +61,54 @@ const AddExpenseForm = ({ budgets }) => {
               id="newExpenseAmount"
               placeholder="e.g., 3.50"
               required
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
         </div>
-        <div className="grid-xs" hidden={budgets.length === 1}>
-          <label htmlFor="newExpenseBudget">Budget Category</label>
-          <select name="newExpenseBudget" id="newExpenseBudget" required>
-            {
-              budgets
-                .sort((a, b) => a.createdAt - b.createdAt)
-                .map((budget) => {
-                  return (
-                    <option key={budget.id} value={budget.id}>
-                      {budget.name}
-                    </option>
-                  )
-                })
-            }
+        <div className="grid gap-2" hidden={budgets.length === 1}>
+          <label htmlFor="newExpenseBudget" className="text-sm font-medium text-gray-700">
+            Budget Category
+          </label>
+          <select
+            name="newExpenseBudget"
+            id="newExpenseBudget"
+            required
+            className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            {budgets
+              .sort((a, b) => a.createdAt - b.createdAt)
+              .map((budget) => {
+                return (
+                  <option key={budget.id} value={budget.id}>
+                    {budget.name}
+                  </option>
+                );
+              })}
           </select>
         </div>
         <input type="hidden" name="_action" value="createExpense" />
-        <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
-          {
-            isSubmitting ? <span>Submitting…</span> : (
-              <>
-                <span>Add Expense</span>
-                <PlusCircleIcon width={20} />
-              </>
-            )
-          }
+        <button
+          type="submit"
+          className="relative flex items-center w-full justify-center py-2 px-6 
+          border-2 border-black bg-black text-white font-bold text-lg rounded-md 
+          transition duration-200 hover:bg-gray-900 hover:text-yellow-500"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <span>Submitting…</span>
+          ) : (
+            <>
+                <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                <span className="relative inline-flex items-center top-1 left-1">
+                    Add Expense
+                    <PlusCircleIcon width={20} />
+                </span>
+            </>
+          )}
         </button>
       </fetcher.Form>
     </div>
-  )
+  );
+  
 }
 export default AddExpenseForm

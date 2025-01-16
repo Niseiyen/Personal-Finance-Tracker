@@ -1,7 +1,4 @@
-// rrd imports
 import { useLoaderData } from "react-router-dom";
-
-// library import
 import { toast } from "react-toastify";
 
 // component imports
@@ -38,11 +35,13 @@ const ExpensesPage = () => {
   const { expenses } = useLoaderData();
 
   return (
-    <div className="grid-lg">
-      <h1>All Expenses</h1>
+    <div className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-lg">
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-6">All 
+        <span className="text-blue-600"> Expenses</span>
+      </h1>
       {expenses && expenses.length > 0 ? (
         <div className="grid-md">
-          <h2>
+          <h2 className="text-lg text-gray-600 mt-8 font-semibold">
             Recent Expenses <small>({expenses.length} total)</small>
           </h2>
           <Table expenses={expenses} />

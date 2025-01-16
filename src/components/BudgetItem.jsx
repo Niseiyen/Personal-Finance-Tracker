@@ -11,27 +11,45 @@ import {
 const BudgetItem = ({ budget, showDelete = false }) => {
   const { id, name, amount, color } = budget;
   const spent = calculateSpentByBudget(id);
+  const progressPercentage = (spent / amount) * 100;
 
   return (
     <div
-      className="budget"
+      className="p-4 mb-6 bg-white rounded-lg shadow-lg border-2 border-gray-200 w-full"
       style={{
         "--accent": color,
       }}
     >
-      <div className="progress-text">
-        <h3>{name}</h3>
-        <p>{formatCurrency(amount)} Budgeted</p>
+      <div className="progress-text mb-4">
+        <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
+        <p className="text-sm text-gray-600">
+          {formatCurrency(amount)} Budgeted
+        </p>
       </div>
-      <progress max={amount} value={spent}>
-        {formatPercentage(spent / amount)}
-      </progress>
-      <div className="progress-text">
-        <small>{formatCurrency(spent)} spent</small>
-        <small>{formatCurrency(amount - spent)} remaining</small>
+
+      <div className="relative w-full h-6 rounded-lg bg-gray-200 shadow-inner overflow-hidden">
+        <div
+          className="absolute top-0 left-0 h-full rounded-lg shadow-md transition-all duration-500 ease-out"
+          style={{
+            width: `${progressPercentage}%`,
+            background: `linear-gradient(135deg, #2563eb, #2563eb90)`, 
+            boxShadow: `0 4px 6px #2563eb50`,
+          }}
+        ></div>
       </div>
+
+      <div className="progress-text mt-3 flex justify-between">
+        <small className="text-sm text-gray-600">
+          {formatCurrency(spent)} spent
+        </small>
+        <small className="text-sm text-gray-600">
+          {formatCurrency(amount - spent)} remaining
+        </small>
+      </div>
+
+      {/* Buttons */}
       {showDelete ? (
-        <div className="flex-sm">
+        <div className="flex mt-6">
           <Form
             method="post"
             action="delete"
@@ -44,22 +62,40 @@ const BudgetItem = ({ budget, showDelete = false }) => {
                 event.preventDefault();
               }
             }}
+            className="w-full"
           >
-            <button type="submit" className="btn">
-              <span>Delete Budget</span>
-              <TrashIcon width={20} />
+            <button
+              type="submit"
+              className="relative flex items-center w-full justify-center py-2 px-6 
+              border-2 border-black bg-black text-white font-bold text-lg rounded-md 
+              transition duration-200 hover:bg-gray-900 hover:text-yellow-500"
+            >
+              <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+              <span className="relative inline-flex items-center top-1 left-1">
+                Delete Budget
+                <TrashIcon width={20} className="ml-2" />
+              </span>
             </button>
           </Form>
         </div>
       ) : (
-        <div className="flex-sm">
-          <Link to={`/budget/${id}`} className="btn">
-            <span>View Details</span>
-            <BanknotesIcon width={20} />
+        <div className="flex mt-6">
+          <Link
+            to={`/budget/${id}`}
+            className="relative flex items-center w-full justify-center py-2 px-6 
+            border-2 border-black bg-black text-white font-bold text-lg rounded-md 
+            transition duration-200 hover:bg-gray-900 hover:text-yellow-500"
+          >
+            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+            <span className="relative inline-flex items-center top-1 left-1">
+              View Details
+              <BanknotesIcon width={20} className="ml-2" />
+            </span>
           </Link>
         </div>
       )}
     </div>
   );
 };
+
 export default BudgetItem;

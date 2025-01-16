@@ -1,7 +1,4 @@
-// rrd imports
 import { Link, useLoaderData } from "react-router-dom";
-
-// library imports
 import { toast } from "react-toastify";
 
 // components
@@ -89,33 +86,38 @@ const Dashboard = () => {
   return (
     <>
       {userName ? (
-        <div className="dashboard">
-          <h1>
-            Welcome back, <span className="accent">{userName}</span>
+        <div className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-lg">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-6">
+            Welcome back, <span className="text-blue-600">{userName}</span>
           </h1>
-          <div className="grid-sm">
+          <div>
             {budgets && budgets.length > 0 ? (
-              <div className="grid-lg">
-                <div className="flex-lg">
+              <div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <AddBudgetForm />
                   <AddExpenseForm budgets={budgets} />
                 </div>
-                <h2>Existing Budgets</h2>
-                <div className="budgets">
+                <div className="border-b-2 border-gray-300 pb-2"></div>
+                <h2 className="text-lg text-gray-600 mt-8 font-semibold">Existing Budgets</h2>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {budgets.map((budget) => (
                     <BudgetItem key={budget.id} budget={budget} />
                   ))}
                 </div>
                 {expenses && expenses.length > 0 && (
-                  <div className="grid-md">
-                    <h2>Recent Expenses</h2>
+                  <div>
+                    <div className="border-b-2 border-gray-300 pb-2"></div>
+                    <h2 className="text-lg text-gray-600 mt-8 font-semibold">Recent Expenses</h2>
                     <Table
                       expenses={expenses
                         .sort((a, b) => b.createdAt - a.createdAt)
                         .slice(0, 8)}
                     />
                     {expenses.length > 8 && (
-                      <Link to="expenses" className="btn btn--dark">
+                      <Link
+                        to="expenses"
+                        className="block mt-4 text-center text-blue-600 hover:underline"
+                      >
                         View all expenses
                       </Link>
                     )}
@@ -123,9 +125,11 @@ const Dashboard = () => {
                 )}
               </div>
             ) : (
-              <div className="grid-sm">
-                <p>Personal budgeting is the secret to financial freedom.</p>
-                <p>Create a budget to get started!</p>
+              <div className="grid gap-6">
+                <p className="text-lg text-gray-600">
+                  Personal budgeting is the secret to financial freedom.
+                </p>
+                <p className="text-lg text-gray-600">Create a budget to get started!</p>
                 <AddBudgetForm />
               </div>
             )}

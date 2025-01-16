@@ -66,22 +66,24 @@ const BudgetPage = () => {
 
   return (
     <div
-      className="grid-lg"
+      className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-lg"
       style={{
         "--accent": budget.color,
       }}
     >
-      <h1 className="h2">
-        <span className="accent">{budget.name}</span> Overview
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-6">
+        <span className="text-blue-600">{budget.name}</span> Overview
       </h1>
       <div className="flex-lg">
         <BudgetItem budget={budget} showDelete={true} />
+        
         <AddExpenseForm budgets={[budget]} />
       </div>
       {expenses && expenses.length > 0 && (
         <div className="grid-md">
-          <h2>
-            <span className="accent">{budget.name}</span> Expenses
+          <div className="border-b-2 border-gray-300 pb-2"></div>
+          <h2 className="text-lg text-gray-600 mt-8 font-semibold">
+            <span className="text-blue-600">{budget.name}</span> Expenses
           </h2>
           <Table expenses={expenses} showBudget={false} />
         </div>

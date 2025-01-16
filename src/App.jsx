@@ -11,10 +11,7 @@ import { deleteBudget } from "./actions/deleteBudget";
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import Error from "./pages/Error";
 import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage";
-import ExpensesPage, {
-  expensesAction,
-  expensesLoader,
-} from "./pages/ExpensesPage";
+import ExpensesPage, { expensesAction, expensesLoader, } from "./pages/ExpensesPage";
 
 const router = createBrowserRouter([
   {
