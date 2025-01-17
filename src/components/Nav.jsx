@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, NavLink } from "react-router-dom";
 import { TrashIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
@@ -6,16 +6,32 @@ import i18next from "i18next";
 
 const Nav = ({ userName }) => {
     const [menuOpen, setMenuOpen] = useState(false);
-
-    const changeLanguage = (lng) => {
-        i18next.changeLanguage(lng);
-        localStorage.setItem('language', lng);
-    };
-
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const deleteButtonRef = useRef(null); // Ref pour le bouton "Delete User"
     const { t } = useTranslation();
 
+    // Change la langue
+    const changeLanguage = (lng) => {
+        i18next.changeLanguage(lng);
+        localStorage.setItem("language", lng);
+    };
+
+    // Gère les clics en dehors du bouton "Delete User"
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (deleteButtonRef.current && !deleteButtonRef.current.contains(event.target)) {
+                setConfirmDelete(false); // Réinitialise le confirmDelete si clic en dehors
+            }
+        };
+        
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
-        <nav className="bg-gray-800 text-white py-4 px-4 flex items-center justify-between relative">
+        <nav className="bg-gray-800 text-white py-3 px-4 flex items-center justify-between relative">
             <NavLink to="/" aria-label="Go to home" className="flex items-center">
                 <span className="text-xl font-semibold tracking-wide hover:text-yellow-500 transition duration-200">
                     HomeBud
@@ -25,39 +41,72 @@ const Nav = ({ userName }) => {
             <div className="hidden md:flex items-center space-x-4">
                 <button
                     onClick={() => changeLanguage("en")}
-                    className="relative flex items-center py-2 px-4 bg-gray-700 text-white font-bold rounded-md transition-all transform duration-200 hover:text-yellow-500"
+                    className="relative flex items-center justify-center py-2 px-2
+                        border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                        transition"
                 >
-                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-900"></span>
-                    <span className="relative" style={{ top: '2px', left: '2px' }}>English</span>
+                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                    <span className="relative inline-flex items-center duration-200 hover:text-yellow-500 top-1 left-1">
+                        English
+                    </span>
                 </button>
                 <button
                     onClick={() => changeLanguage("fr")}
-                    className="relative flex items-center py-2 px-4 bg-gray-700 text-white font-bold rounded-md transition-all transform duration-200 hover:text-yellow-500"
+                    className="relative flex items-center justify-center py-2 px-2
+                        border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                        transition"
                 >
-                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-900"></span>
-                    <span className="relative" style={{ top: '2px', left: '2px' }}>Français</span>
+                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                    <span className="relative inline-flex items-center duration-200 hover:text-yellow-500 top-1 left-1">
+                        Français
+                    </span>
                 </button>
 
                 {userName && (
-                    <Form
-                        method="post"
-                        action="logout"
-                        onSubmit={(event) => {
-                            if (!confirm("Delete user and all data?")) {
-                                event.preventDefault();
-                            }
-                        }}
-                    >
-                        <button
-                            type="submit"
-                            className="relative flex items-center py-2 px-4 bg-gray-700 text-white font-bold rounded-md transition-all transform duration-200 hover:text-yellow-500"
-                        >
-                            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-900"></span>
-                            <span className="relative flex items-center" style={{ top: '2px', left: '2px' }}>
-                                {t("deleteUser")} <TrashIcon width={20} className="ml-2" />
-                            </span>
-                        </button>
-                    </Form>
+                    <>
+                        {confirmDelete ? (
+                            <div className="flex items-center space-x-4">
+                                <span className="text-sm mt-1 ps-1">{t("confirmDeleteMessage")}</span>
+                                <Form method="post" action="logout" className="inline-block">
+                                    <button
+                                        type="submit"
+                                        className="relative flex items-center justify-center py-2 px-2
+                                            border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                                            transition"
+                                    >
+                                        <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-red-700"></span>
+                                        <span className="relative inline-flex items-center duration-200 hover:text-yellow-500 top-1 left-1">
+                                            {t("confirm")}
+                                        </span>
+                                    </button>
+                                </Form>
+                                <button
+                                    onClick={() => setConfirmDelete(false)}
+                                    className="relative flex items-center justify-center py-2 px-2 
+                                            border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                                            transition"
+                                >
+                                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                                    <span className="relative inline-flex items-center duration-200 hover:text-yellow-500 top-1 left-1">
+                                        {t("cancel")}
+                                    </span>
+                                </button>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={() => setConfirmDelete(true)}
+                                className="relative flex items-center justify-center py-2 px-2 
+                                    border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                                    transition"
+                                ref={deleteButtonRef} // Ajout de la référence
+                            >
+                                <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                                <span className="relative inline-flex items-center duration-200 hover:text-yellow-500 top-1 left-1">
+                                    {t("deleteUser")} <TrashIcon width={20} className="ml-2" />
+                                </span>
+                            </button>
+                        )}
+                    </>
                 )}
             </div>
 
@@ -73,49 +122,79 @@ const Nav = ({ userName }) => {
                 )}
             </button>
 
-            <div
-                className={`absolute top-12 left-0 w-full bg-gray-800 z-10 p-4 p-8 space-y-4 md:hidden transition-all duration-300 ease-in-out transform ${
-                    menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
-                <button
-                    onClick={() => changeLanguage("en")}
-                    className="block w-full ps-2 py-2 px-4 bg-gray-700 text-white font-bold rounded-md transition-all transform duration-200 hover:text-yellow-500"
-                >
-                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-900"></span>
-                    <span className="relative" style={{ top: '2px', left: '2px' }}>English</span>
-                </button>
-                <button
-                    onClick={() => changeLanguage("fr")}
-                    className="block w-full py-2 px-4 bg-gray-700 text-white font-bold rounded-md transition-all transform duration-200 hover:text-yellow-500"
-                >
-                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-900"></span>
-                    <span className="relative" style={{ top: '2px', left: '2px' }}>Français</span>
-                </button>
-
-                {userName && (
-                    <Form
-                        method="post"
-                        action="logout"
-                        onSubmit={(event) => {
-                            if (!confirm("Delete user and all data?")) {
-                                event.preventDefault();
-                            }
-                        }}
-                        className="block"
+            {menuOpen && (
+                <div className="absolute top-12 left-0 w-full bg-gray-800 z-10 p-4 space-y-4 md:hidden">
+                    <button
+                        onClick={() => changeLanguage("en")}
+                        className="relative block w-full py-2 px-4 
+                            border-2 border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                            transition"
                     >
-                        <button
-                            type="submit"
-                            className="block w-full py-2 px-4 bg-gray-700 text-white font-bold rounded-md transition-all transform duration-200 hover:text-yellow-500"
-                        >
-                            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-900"></span>
-                            <span className="relative flex items-center justify-center" style={{ top: '2px', left: '2px' }}>
-                                {t("deleteUser")} <TrashIcon width={20} className="ml-2" />
-                            </span>
-                        </button>
-                    </Form>
-                )}
-            </div>
+                        <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                        <span className="relative inline-block top-1 left-1 duration-200 hover:text-yellow-500">
+                            English
+                        </span>
+                    </button>
+                    <button
+                        onClick={() => changeLanguage("fr")}
+                        className="relative block w-full py-2 px-4 
+                            border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                            transition"
+                    >
+                        <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                        <span className="relative inline-block top-1 left-1 duration-200 hover:text-yellow-500">
+                            Français
+                        </span>
+                    </button>
+
+                    {userName && (
+                        <>
+                            {confirmDelete ? (
+                                <div className="space-y-2">
+                                    <span className="block text-sm text-center">{t("confirmDeleteMessage")}</span>
+                                    <Form method="post" action="logout" className="block">
+                                        <button
+                                            type="submit"
+                                            className="relative block w-full py-2 px-4 
+                                                border-2 border-black border-gray-900 bg-gray-900  text-white font-bold text-lg rounded-md 
+                                                transition"
+                                        >
+                                            <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-red-700"></span>
+                                            <span className="relative inline-block top-1 left-1 duration-200 hover:bg-red-800">
+                                                {t("confirm")}
+                                            </span>
+                                        </button>
+                                    </Form>
+                                    <button
+                                        onClick={() => setConfirmDelete(false)}
+                                        className="relative block w-full py-2 px-4 
+                                            border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                                            transition"
+                                    >
+                                        <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                                        <span className="relative inline-block top-1 left-1 duration-200 hover:bg-gray-800">
+                                            {t("cancel")}
+                                        </span>
+                                    </button>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={() => setConfirmDelete(true)}
+                                    className="relative block w-full py-2 px-4 
+                                        border-2 border-black border-gray-900 bg-gray-900 text-white font-bold text-lg rounded-md 
+                                        transition"
+                                >
+                                    <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
+                                    <span className="relative flex items-center justify-center top-1 left-1 space-x-2 duration-200 hover:text-yellow-500">
+                                        <span>{t("deleteUser")}</span>
+                                        <TrashIcon width={20} />
+                                    </span>
+                                </button>
+                            )}
+                        </>
+                    )}
+                </div>
+            )}
         </nav>
     );
 };

@@ -150,7 +150,7 @@ const Dashboard = () => {
               <div className="grid gap-6">
                 <p className="text-lg text-gray-600">{t('personalBudgetingMessage')}</p>
                 <p className="text-lg text-gray-600">{t('createBudgetMessage')}</p>
-                <div className="transition-transform transform hover:scale-105">
+                <div>
                   <AddBudgetForm />
                 </div>
               </div>

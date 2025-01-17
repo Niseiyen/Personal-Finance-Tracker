@@ -45,6 +45,8 @@
 
     "all_expenses": "All",
     "total": "total",
-    "no_expenses": "No Expenses to show"
+    "no_expenses": "No Expenses to show",
+
+    "confirmDeleteMessage": "Are you sure you want to delete your account?"
 }
   
