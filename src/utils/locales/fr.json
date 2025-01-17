@@ -1,0 +1,50 @@
+{
+    "deleteUser": "Supprimer l'utilisateur",
+
+    "introHeader": "Prenez le contrôle de ",
+    "introAccent": "votre argent",
+    "introSubtext": "La gestion de budget personnel est la clé de la liberté financière. Commencez dès aujourd'hui.",
+    "placeholderName": "Quel est votre nom ?",
+    "createAccountButton": "Créer un compte",
+    
+    "createBudget": "Créer un budget",
+    "budgetName": "Nom du budget",
+    "amount": "Montant",
+    "placeholderBudgetName": "par ex., Courses",
+    "placeholderAmount": "par ex., 350 €",
+    "submitting": "Envoi en cours…",
+    "createButton": "Créer un budget",
+
+    "addExpense": "Ajouter une dépense",
+    "expenseName": "Nom de la dépense",
+    "budgetCategory": "Catégorie de budget",
+    "submit": "En cours d'envoi...",
+
+    "budgeted": "Budgété",
+    "spent": "dépensé",
+    "remaining": "restant",
+    "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce budget définitivement ?",
+    "deleteBudget": "Supprimer le budget",
+    "viewDetails": "Voir les détails",
+
+    "deleteExpenseLabel": "Supprimer la dépense : {{expenseName}}",
+
+    "name": "Nom",
+    "date": "Date",
+    "budget": "Budget",
+
+    "overview": "Vue d'ensemble",
+    "expenses": "Dépenses",
+    
+    "welcomeBack": "Bienvenue à nouveau",
+    "existingBudgets": "Budgets existants",
+    "recentExpenses": "Dépenses récentes",
+    "viewAllExpenses": "Voir toutes les dépenses",
+    "personalBudgetingMessage": "La gestion personnelle des finances est la clé de la liberté financière.",
+    "createBudgetMessage": "Créez un budget pour commencer !",
+
+    "all_expenses": "Toutes les",
+    "total": "total",
+    "no_expenses": "Aucune dépense à afficher"
+  }
+  

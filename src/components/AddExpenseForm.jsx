@@ -2,32 +2,34 @@ import { useEffect, useRef } from "react"
 import { useFetcher } from "react-router-dom"
 import { PlusCircleIcon } from "@heroicons/react/24/solid"
 
+import { useTranslation } from 'react-i18next';
+
 const AddExpenseForm = ({ budgets }) => {
-  const fetcher = useFetcher()
+  const { t } = useTranslation();
+
+  const fetcher = useFetcher();
   const isSubmitting = fetcher.state === "submitting";
 
-  const formRef = useRef()
-  const focusRef = useRef()
+  const formRef = useRef();
+  const focusRef = useRef();
 
   useEffect(() => {
     if (!isSubmitting) {
       // clear form
-      formRef.current.reset()
+      formRef.current.reset();
       // reset focus
-      focusRef.current.focus()
+      focusRef.current.focus();
     }
-
-  }, [isSubmitting])
+  }, [isSubmitting]);
 
   return (
     <div className="form-wrapper p-6 bg-white rounded-lg 
     shadow-lg border-2 border-gray-200 mb-6">
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-        Add New{" "}
+        {t('addExpense')}{" "}
         <span className="text-blue-500">
           {budgets.length === 1 && `${budgets.map((budg) => budg.name)}`}
         </span>{" "}
-        Expense
       </h2>
       <fetcher.Form
         method="post"
@@ -37,7 +39,7 @@ const AddExpenseForm = ({ budgets }) => {
         <div className="expense-inputs grid gap-4">
           <div className="grid gap-2">
             <label htmlFor="newExpense" className="text-sm font-medium text-gray-700">
-              Expense Name
+              {t('expenseName')}
             </label>
             <input
               type="text"
@@ -51,7 +53,7 @@ const AddExpenseForm = ({ budgets }) => {
           </div>
           <div className="grid gap-2">
             <label htmlFor="newExpenseAmount" className="text-sm font-medium text-gray-700">
-              Amount
+              {t('amount')}
             </label>
             <input
               type="number"
@@ -67,7 +69,7 @@ const AddExpenseForm = ({ budgets }) => {
         </div>
         <div className="grid gap-2" hidden={budgets.length === 1}>
           <label htmlFor="newExpenseBudget" className="text-sm font-medium text-gray-700">
-            Budget Category
+            {t('budgetCategory')}
           </label>
           <select
             name="newExpenseBudget"
@@ -95,12 +97,12 @@ const AddExpenseForm = ({ budgets }) => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <span>Submitting…</span>
+            <span>{t('submit')}</span>
           ) : (
             <>
                 <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
                 <span className="relative inline-flex items-center top-1 left-1">
-                    Add Expense
+                    {t('addExpense')}
                     <PlusCircleIcon width={20} />
                 </span>
             </>
@@ -109,6 +111,6 @@ const AddExpenseForm = ({ budgets }) => {
       </fetcher.Form>
     </div>
   );
-  
-}
-export default AddExpenseForm
+};
+
+export default AddExpenseForm;

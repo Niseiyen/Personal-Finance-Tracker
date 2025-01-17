@@ -1,0 +1,50 @@
+{
+    "deleteUser": "Delete User",
+
+    "introHeader": "Take Control of ",
+    "introAccent": "Your Money",
+    "introSubtext": "Personal budgeting is the secret to financial freedom. Start your journey today.",
+    "placeholderName": "What is your name?",
+    "createAccountButton": "Create Account",
+    
+    "createBudget": "Create Budget",
+    "budgetName": "Budget Name",
+    "amount": "Amount",
+    "placeholderBudgetName": "e.g., Groceries",
+    "placeholderAmount": "e.g., $350",
+    "submitting": "Submitting…",
+    "createButton": "Create Budget",
+
+    "addExpense": "Add Expense",
+    "expenseName": "Expense Name",
+    "budgetCategory": "Budget Category",
+    "submit": "Submitting...",
+
+    "budgeted": "Budgeted",
+    "spent": "spent",
+    "remaining": "remaining",
+    "deleteConfirmation": "Are you sure you want to permanently delete this budget?",
+    "deleteBudget": "Delete Budget",
+    "viewDetails": "View Details",
+
+    "deleteExpenseLabel": "Delete expense: {{expenseName}}",
+
+    "name": "Name",
+    "date": "Date",
+    "budget": "Budget",
+
+    "overview": "Overview",
+    "expenses": "Expenses",
+
+    "welcomeBack": "Welcome back",
+    "existingBudgets": "Existing Budgets",
+    "recentExpenses": "Recent Expenses",
+    "viewAllExpenses": "View all expenses",
+    "personalBudgetingMessage": "Personal budgeting is the secret to financial freedom.",
+    "createBudgetMessage": "Create a budget to get started!",
+
+    "all_expenses": "All",
+    "total": "total",
+    "no_expenses": "No Expenses to show"
+}
+  

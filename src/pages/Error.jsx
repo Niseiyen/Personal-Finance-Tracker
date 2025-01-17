@@ -7,7 +7,6 @@ const Error = () => {
 
   return (
     <div className="error-page min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
-      {/* Error Heading */}
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-extrabold text-gray-800">
           Oops! Something went wrong.
@@ -17,7 +16,6 @@ const Error = () => {
         </p>
       </div>
 
-      {/* Buttons */}
       <div className="mt-6 flex space-x-4">
         <button
           className="relative flex items-center justify-center py-2 px-6 

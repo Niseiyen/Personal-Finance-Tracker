@@ -16,6 +16,7 @@ import {
   fetchData,
   waait,
 } from "../helpers";
+import { useTranslation } from "react-i18next";
 
 // loader
 export function dashboardLoader() {
@@ -25,6 +26,11 @@ export function dashboardLoader() {
   return { userName, budgets, expenses };
 }
 
+function getLanguageFromLocalStorage() {
+  const language = localStorage.getItem("language");
+  return language ? language : "en";
+}
+
 // action
 export async function dashboardAction({ request }) {
   await waait();
@@ -32,11 +38,16 @@ export async function dashboardAction({ request }) {
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
 
+  const userLang = getLanguageFromLocalStorage();
+
   // new user submission
   if (_action === "newUser") {
     try {
       localStorage.setItem("userName", JSON.stringify(values.userName));
-      return toast.success(`Welcome, ${values.userName}`);
+      const successMessage = userLang === "fr" 
+        ? `Bienvenue, ${values.userName}` 
+        : `Welcome, ${values.userName}`;
+      return toast.success(successMessage);
     } catch (e) {
       throw new Error("There was a problem creating your account.");
     }
@@ -48,7 +59,10 @@ export async function dashboardAction({ request }) {
         name: values.newBudget,
         amount: values.newBudgetAmount,
       });
-      return toast.success("Budget created!");
+      const successMessage = userLang === "fr" 
+        ? "Budget créé !" 
+        : "Budget created!";
+      return toast.success(successMessage);
     } catch (e) {
       throw new Error("There was a problem creating your budget.");
     }
@@ -61,8 +75,10 @@ export async function dashboardAction({ request }) {
         amount: values.newExpenseAmount,
         budgetId: values.newExpenseBudget,
       });
-      return toast.success(`Expense ${values.newExpense} created!`);
-    } catch (e) {
+      const successMessage = userLang === "fr" 
+        ? `Dépense ${values.newExpense} créée !` 
+        : `Expense ${values.newExpense} created!`;
+      return toast.success(successMessage);    } catch (e) {
       throw new Error("There was a problem creating your expense.");
     }
   }
@@ -73,7 +89,10 @@ export async function dashboardAction({ request }) {
         key: "expenses",
         id: values.expenseId,
       });
-      return toast.success("Expense deleted!");
+      const successMessage = userLang === "fr" 
+        ? "Dépense supprimée !" 
+        : "Expense deleted!";
+      return toast.success(successMessage);
     } catch (e) {
       throw new Error("There was a problem deleting your expense.");
     }
@@ -82,13 +101,14 @@ export async function dashboardAction({ request }) {
 
 const Dashboard = () => {
   const { userName, budgets, expenses } = useLoaderData();
+  const { t } = useTranslation();
 
   return (
     <>
       {userName ? (
         <div className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-lg">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-6">
-            Welcome back, <span className="text-blue-600">{userName}</span>
+            {t('welcomeBack')}, <span className="text-blue-600">{userName}</span>
           </h1>
           <div>
             {budgets && budgets.length > 0 ? (
@@ -98,7 +118,7 @@ const Dashboard = () => {
                   <AddExpenseForm budgets={budgets} />
                 </div>
                 <div className="border-b-2 border-gray-300 pb-2"></div>
-                <h2 className="text-lg text-gray-600 mt-8 font-semibold">Existing Budgets</h2>
+                <h2 className="text-lg text-gray-600 mt-8 font-semibold">{t('existingBudgets')}</h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {budgets.map((budget) => (
                     <BudgetItem key={budget.id} budget={budget} />
@@ -107,7 +127,7 @@ const Dashboard = () => {
                 {expenses && expenses.length > 0 && (
                   <div>
                     <div className="border-b-2 border-gray-300 pb-2"></div>
-                    <h2 className="text-lg text-gray-600 mt-8 font-semibold">Recent Expenses</h2>
+                    <h2 className="text-lg text-gray-600 mt-8 font-semibold">{t('recentExpenses')}</h2>
                     <Table
                       expenses={expenses
                         .sort((a, b) => b.createdAt - a.createdAt)
@@ -118,7 +138,7 @@ const Dashboard = () => {
                         to="expenses"
                         className="block mt-4 text-center text-blue-600 hover:underline"
                       >
-                        View all expenses
+                        {t('viewAllExpenses')}
                       </Link>
                     )}
                   </div>
@@ -126,10 +146,8 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="grid gap-6">
-                <p className="text-lg text-gray-600">
-                  Personal budgeting is the secret to financial freedom.
-                </p>
-                <p className="text-lg text-gray-600">Create a budget to get started!</p>
+                <p className="text-lg text-gray-600">{t('personalBudgetingMessage')}</p>
+                <p className="text-lg text-gray-600">{t('createBudgetMessage')}</p>
                 <AddBudgetForm />
               </div>
             )}
@@ -141,4 +159,5 @@ const Dashboard = () => {
     </>
   );
 };
+
 export default Dashboard;

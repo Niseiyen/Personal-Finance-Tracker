@@ -7,9 +7,12 @@ import {
   formatDateToLocaleString,
   getAllMatchingItems,
 } from "../helpers";
+import { useTranslation } from "react-i18next";
 
 const ExpenseItem = ({ expense, showBudget }) => {
     const fetcher = useFetcher();
+
+    const { t } = useTranslation();
   
     const budget = getAllMatchingItems({
       category: "budgets",
@@ -44,8 +47,8 @@ const ExpenseItem = ({ expense, showBudget }) => {
               className="relative flex items-center w-full justify-center py-2 px-6 
                 border-2 border-black bg-black text-white font-bold text-lg rounded-md 
                 transition duration-200 hover:bg-gray-900 hover:text-yellow-500"
-              aria-label={`Delete ${expense.name} expense`}
-            >
+                aria-label={t('deleteExpenseLabel', { expenseName: expense.name })} // Traduction du label
+                >
                 <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
                 <span className="relative inline-flex items-center top-1 left-1">
                     <TrashIcon width={20} />

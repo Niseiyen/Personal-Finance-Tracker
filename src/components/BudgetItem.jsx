@@ -1,5 +1,6 @@
 import { Form, Link } from "react-router-dom";
 import { BanknotesIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useTranslation } from 'react-i18next'; 
 
 // helper functions
 import {
@@ -9,6 +10,8 @@ import {
 } from "../helpers";
 
 const BudgetItem = ({ budget, showDelete = false }) => {
+  const { t } = useTranslation(); 
+
   const { id, name, amount, color } = budget;
   const spent = calculateSpentByBudget(id);
   const progressPercentage = (spent / amount) * 100;
@@ -23,7 +26,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
       <div className="progress-text mb-4">
         <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
         <p className="text-sm text-gray-600">
-          {formatCurrency(amount)} Budgeted
+          {formatCurrency(amount)} {t('budgeted')} 
         </p>
       </div>
 
@@ -40,14 +43,13 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 
       <div className="progress-text mt-3 flex justify-between">
         <small className="text-sm text-gray-600">
-          {formatCurrency(spent)} spent
+          {formatCurrency(spent)} {t('spent')} 
         </small>
         <small className="text-sm text-gray-600">
-          {formatCurrency(amount - spent)} remaining
+          {formatCurrency(amount - spent)} {t('remaining')} 
         </small>
       </div>
 
-      {/* Buttons */}
       {showDelete ? (
         <div className="flex mt-6">
           <Form
@@ -56,7 +58,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
             onSubmit={(event) => {
               if (
                 !confirm(
-                  "Are you sure you want to permanently delete this budget?"
+                  t('deleteConfirmation')
                 )
               ) {
                 event.preventDefault();
@@ -72,7 +74,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
             >
               <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
               <span className="relative inline-flex items-center top-1 left-1">
-                Delete Budget
+                {t('deleteBudget')} 
                 <TrashIcon width={20} className="ml-2" />
               </span>
             </button>
@@ -88,7 +90,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
           >
             <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
             <span className="relative inline-flex items-center top-1 left-1">
-              View Details
+              {t('viewDetails')}
               <BanknotesIcon width={20} className="ml-2" />
             </span>
           </Link>

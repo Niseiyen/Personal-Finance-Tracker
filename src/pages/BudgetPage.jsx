@@ -1,5 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 // components
 import AddExpenseForm from "../components/AddExpenseForm";
@@ -63,6 +64,7 @@ export async function budgetAction({ request }) {
 
 const BudgetPage = () => {
   const { budget, expenses } = useLoaderData();
+  const { t } = useTranslation(); 
 
   return (
     <div
@@ -72,7 +74,7 @@ const BudgetPage = () => {
       }}
     >
       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-6">
-        <span className="text-blue-600">{budget.name}</span> Overview
+        <span className="text-blue-600">{budget.name}</span> {t("overview")}
       </h1>
       <div className="flex-lg">
         <BudgetItem budget={budget} showDelete={true} />
@@ -83,7 +85,7 @@ const BudgetPage = () => {
         <div className="grid-md">
           <div className="border-b-2 border-gray-300 pb-2"></div>
           <h2 className="text-lg text-gray-600 mt-8 font-semibold">
-            <span className="text-blue-600">{budget.name}</span> Expenses
+            <span className="text-blue-600">{budget.name}</span> {t("expenses")}
           </h2>
           <Table expenses={expenses} showBudget={false} />
         </div>
@@ -91,4 +93,5 @@ const BudgetPage = () => {
     </div>
   );
 };
+
 export default BudgetPage;

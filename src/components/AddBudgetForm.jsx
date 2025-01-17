@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Form, useFetcher } from "react-router-dom";
 import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 
 const AddBudgetForm = () => {
+  const { t } = useTranslation();
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state === "submitting";
 
@@ -19,17 +21,17 @@ const AddBudgetForm = () => {
   return (
     <div className="flex-1 p-6 bg-white rounded-lg mb-6 
       shadow-lg border-2 border-gray-200">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Create Budget</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">{t("createBudget")}</h2>
       <fetcher.Form method="post" className="grid gap-4" ref={formRef}>
         <div className="grid gap-2">
           <label htmlFor="newBudget" className="text-sm font-medium text-gray-700">
-            Budget Name
+            {t("budgetName")}
           </label>
           <input
             type="text"
             name="newBudget"
             id="newBudget"
-            placeholder="e.g., Groceries"
+            placeholder={t("placeholderBudgetName")}
             required
             ref={focusRef}
             className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -37,14 +39,14 @@ const AddBudgetForm = () => {
         </div>
         <div className="grid gap-2">
           <label htmlFor="newBudgetAmount" className="text-sm font-medium text-gray-700">
-            Amount
+            {t("amount")}
           </label>
           <input
             type="number"
             step="0.01"
             name="newBudgetAmount"
             id="newBudgetAmount"
-            placeholder="e.g., $350"
+            placeholder={t("placeholderAmount")}
             required
             inputMode="decimal"
             className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -57,12 +59,12 @@ const AddBudgetForm = () => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <span>Submitting…</span>
+            <span>{t("submitting")}</span>
           ) : (
             <>
               <span className="absolute top-0 left-0 mt-1 ml-1 h-full w-full rounded bg-gray-700"></span>
               <span className="relative inline-flex items-center top-1 left-1">
-                Create Budget
+                {t("createButton")}
                 <CurrencyDollarIcon width={20} className="ml-1 inline-block"/>
               </span>
             </>
