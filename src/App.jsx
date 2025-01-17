@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: "budget/:id",
+        path: "/Personal-Finance-Tracker/budget/:id",
         element: <BudgetPage />,
         loader: budgetLoader,
         action: budgetAction,
@@ -41,14 +41,14 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "expenses",
+        path: "/Personal-Finance-Tracker/expenses",
         element: <ExpensesPage />,
         loader: expensesLoader,
         action: expensesAction,
         errorElement: <Error />,
       },
       {
-        path: "logout",
+        path: "/Personal-Finance-Tracker/logout",
         action: logoutAction,
       },
     ],

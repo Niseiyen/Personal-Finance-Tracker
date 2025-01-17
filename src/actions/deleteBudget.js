@@ -43,5 +43,5 @@ export function deleteBudget({ params }) {
     throw new Error(errorMessage);
   }
 
-  return redirect("/");
+  return redirect("/Personal-Finance-Tracker/");
 }
