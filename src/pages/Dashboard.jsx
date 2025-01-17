@@ -106,7 +106,7 @@ const Dashboard = () => {
   return (
     <>
       {userName ? (
-        <div className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8 bg-white rounded-lg shadow-lg">
+        <div className="max-w-7xl mx-auto p-4 sm:p-6 md:p-8 lg:mt-6 bg-white rounded-lg shadow-lg">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-6">
             {t('welcomeBack')}, <span className="text-blue-600">{userName}</span>
           </h1>
