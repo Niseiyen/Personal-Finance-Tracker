@@ -32,7 +32,7 @@ const Nav = ({ userName }) => {
 
     return (
         <nav className="bg-gray-800 text-white py-3 px-4 flex items-center justify-between relative">
-            <NavLink to="/" aria-label="Go to home" className="flex items-center">
+            <NavLink to="/Personal-Finance-Tracker/" aria-label="Go to home" className="flex items-center">
                 <span className="text-xl font-semibold tracking-wide hover:text-yellow-500 transition duration-200">
                     HomeBud
                 </span>
