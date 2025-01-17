@@ -3,24 +3,24 @@ import { Form, NavLink } from "react-router-dom";
 import { TrashIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const Nav = ({ userName }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const deleteButtonRef = useRef(null); // Ref pour le bouton "Delete User"
+    const deleteButtonRef = useRef(null); 
     const { t } = useTranslation();
 
-    // Change la langue
     const changeLanguage = (lng) => {
         i18next.changeLanguage(lng);
         localStorage.setItem("language", lng);
     };
 
-    // Gère les clics en dehors du bouton "Delete User"
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (deleteButtonRef.current && !deleteButtonRef.current.contains(event.target)) {
-                setConfirmDelete(false); // Réinitialise le confirmDelete si clic en dehors
+                setConfirmDelete(false); 
             }
         };
         
@@ -29,6 +29,12 @@ const Nav = ({ userName }) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    const dropdownVariants = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: -20 },
+    };
 
     return (
         <nav className="bg-gray-800 text-white py-3 px-4 flex items-center justify-between relative">
@@ -122,8 +128,15 @@ const Nav = ({ userName }) => {
                 )}
             </button>
 
+            <AnimatePresence>
             {menuOpen && (
-                <div className="absolute top-12 left-0 w-full bg-gray-800 z-10 p-4 space-y-4 md:hidden">
+                <motion.div 
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={dropdownVariants}
+                    transition={{ duration: 0.3 }}
+                    className="absolute top-12 left-0 w-full bg-gray-800 z-10 p-4 space-y-4 md:hidden">
                     <button
                         onClick={() => changeLanguage("en")}
                         className="relative block w-full py-2 px-4 
@@ -193,8 +206,9 @@ const Nav = ({ userName }) => {
                             )}
                         </>
                     )}
-                </div>
+                </motion.div>
             )}
+            </AnimatePresence>
         </nav>
     );
 };
