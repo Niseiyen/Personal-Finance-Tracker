@@ -23,8 +23,9 @@ const AddExpenseForm = ({ budgets }) => {
   }, [isSubmitting]);
 
   return (
-    <div className="form-wrapper p-6 bg-white rounded-lg 
+    <div className="relative p-6 bg-white rounded-lg 
     shadow-lg border-2 border-gray-200 mb-6">
+      <div className="absolute inset-1 rounded border-2 border-dashed border-blue-500 pointer-events-none"></div>
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
         {t('addExpense')}{" "}
         <span className="text-blue-500">

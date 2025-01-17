@@ -19,8 +19,8 @@ const AddBudgetForm = () => {
   }, [isSubmitting]);
 
   return (
-    <div className="flex-1 p-6 bg-white rounded-lg mb-6 
-      shadow-lg border-2 border-gray-200">
+    <div className="relative flex-1 p-6 bg-white rounded-lg  shadow-lg border-2 border-gray-200">
+      <div className="absolute inset-1 rounded border-2 border-dashed border-blue-500 pointer-events-none"></div>
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">{t("createBudget")}</h2>
       <fetcher.Form method="post" className="grid gap-4" ref={formRef}>
         <div className="grid gap-2">
@@ -49,6 +49,7 @@ const AddBudgetForm = () => {
             placeholder={t("placeholderAmount")}
             required
             inputMode="decimal"
+            min="0"
             className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>

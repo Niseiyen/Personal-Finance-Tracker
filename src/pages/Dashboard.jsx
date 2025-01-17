@@ -114,19 +114,21 @@ const Dashboard = () => {
             {budgets && budgets.length > 0 ? (
               <div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <AddBudgetForm />
-                  <AddExpenseForm budgets={budgets} />
+                    <AddBudgetForm />
+                    <AddExpenseForm budgets={budgets} />
                 </div>
                 <div className="border-b-2 border-gray-300 pb-2"></div>
-                <h2 className="text-lg text-gray-600 mt-8 font-semibold">{t('existingBudgets')}</h2>
+                <h2 className="text-lg text-gray-600 mt-8 mb-1 font-semibold">{t('existingBudgets')}</h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {budgets.map((budget) => (
-                    <BudgetItem key={budget.id} budget={budget} />
+                    <div key={budget.id} className="border-2 border-blue-500 rounded-lg p-1">
+                      <BudgetItem budget={budget} />
+                    </div>
                   ))}
                 </div>
                 {expenses && expenses.length > 0 && (
                   <div>
-                    <div className="border-b-2 border-gray-300 pb-2"></div>
+                    <div className="border-b-2 border-gray-300 pb-2 pt-6 mb-1"></div>
                     <h2 className="text-lg text-gray-600 mt-8 font-semibold">{t('recentExpenses')}</h2>
                     <Table
                       expenses={expenses
@@ -148,7 +150,9 @@ const Dashboard = () => {
               <div className="grid gap-6">
                 <p className="text-lg text-gray-600">{t('personalBudgetingMessage')}</p>
                 <p className="text-lg text-gray-600">{t('createBudgetMessage')}</p>
-                <AddBudgetForm />
+                <div className="transition-transform transform hover:scale-105">
+                  <AddBudgetForm />
+                </div>
               </div>
             )}
           </div>

@@ -18,7 +18,7 @@ const BudgetItem = ({ budget, showDelete = false }) => {
 
   return (
     <div
-      className="p-4 mb-6 bg-white rounded-lg shadow-lg border-2 border-gray-200 w-full"
+      className="p-4 bg-white rounded-lg shadow-lg border-2 border-gray-200 w-full"
       style={{
         "--accent": color,
       }}
