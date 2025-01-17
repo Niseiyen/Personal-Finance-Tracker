@@ -47,6 +47,8 @@
     "total": "total",
     "no_expenses": "Aucune dépense à afficher",
 
-    "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer votre compte ?"
+    "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
   }
   
