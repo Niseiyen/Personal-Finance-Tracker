@@ -20,5 +20,5 @@ export async function logoutAction() {
 
   toast.success(successMessage);
 
-  return redirect("/");
+  return redirect("/Personal-Finance-Tracker/");
 }

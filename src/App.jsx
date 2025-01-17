@@ -15,7 +15,7 @@ import ExpensesPage, { expensesAction, expensesLoader, } from "./pages/ExpensesP
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/Personal-Finance-Tracker/",
     element: <Main />,
     loader: mainLoader,
     errorElement: <Error />,
